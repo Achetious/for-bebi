@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single+Ink:wght@100..900&display=swap");
+@theme {
+  --font-bitcount: "Bitcount Prop Single Ink", sans-serif;
+}
+
+body {
+  @apply bg-[url('../img/bg.png')] bg-center bg-fixed bg-cover h-screen m-0 font-bitcount;
+}
