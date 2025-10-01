@@ -17,11 +17,11 @@
 <body class="flex justify-center items-center flex-col">
     <div class="h-[500px] w-[900px] rounded-2xl bg-[#BDEEF2] mb-14 p-8 shadow-[12px_12px_0px_rgba(107,114,128,1)]"
         data-aos="fade-in" data-aos-duration="1500">
-        <div class="mb-4 border-b border-gray-200 dark:border-gray-700" data-aos="fade-down" data-aos-duration="2000">
+        <div class="mb-4 border-b border-gray-200 dark:border-gray-700" data-aos="fade-down" data-aos-duration="1500">
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab"
                 data-tabs-toggle="#default-styled-tab-content"
                 data-tabs-active-classes="text-white hover:text-white dark:text-white dark:hover:text-white border- dark:border-white bg-[#F2BDDE]"
-                data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-black border-gray-100 hover:border-[#F2BDDE] dark:border-gray-700 dark:hover:text-[#F2BDDE]"
+                data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-black border-gray-100 hover:border-[#F2BDDE] dark:border-gray-700 dark:hover:text-[#F2BDDE] cursor-pointer"
                 role="tablist">
                 <li class="me-2" role="presentation">
                     <button class="inline-block p-4 border-b-2 rounded-t-lg font-bold text-lg" id="profile-styled-tab"
@@ -31,14 +31,14 @@
                 <li class="me-2" role="presentation">
                     <button
                         class="inline-block p-4 border-b-2 rounded-t-lg font-bold text-lg hover:text-[#F2BDDE] hover:border-[#F2BDDE] dark:hover:text-[#F2BDDE]"
-                        id="dashboard-styled-tab" data-tabs-target="#styled-dashboard" type="button" role="tab"
-                        aria-controls="dashboard" aria-selected="false">gallery</button>
+                        id="gallery-styled-tab" data-tabs-target="#styled-gallery" type="button" role="tab"
+                        aria-controls="gallery" aria-selected="false">gallery</button>
                 </li>
                 <li class="me-2" role="presentation">
                     <button
                         class="inline-block p-4 border-b-2 rounded-t-lg font-bold text-lg hover:text-[#F2BDDE] hover:border-[#F2BDDE] dark:hover:text-[#F2BDDE]"
-                        id="settings-styled-tab" data-tabs-target="#styled-settings" type="button" role="tab"
-                        aria-controls="settings" aria-selected="false">letters</button>
+                        id="letters-styled-tab" data-tabs-target="#styled-letters" type="button" role="tab"
+                        aria-controls="letters" aria-selected="false">letters</button>
                 </li>
                 <!-- <li role="presentation">
                     <button
@@ -48,195 +48,174 @@
                 </li> -->
             </ul>
         </div>
-        <div id="default-styled-tab-content" data-aos="fade-down" data-aos-duration="2000">
-            <div class="hidden p-4 rounded-lg h-[375px] bg-gray-50" id="styled-profile" role="tabpanel"
-                aria-labelledby="profile-tab">
-                <p class="text-lg text-black">hi bebiiiii!!! ksksskksksks. i made this website for u since it's
-                    october!!!! your birthmonth ksksksksksksk grrrr. sinimulan ko lang to kanina. i was about to finish
-                    this tonight but instead... ;; ako nasurprise!!!!!!!! HAHAHAHAHAHAHA. i had fun todae. thank you so
-                    much for surprising and making my tiring day a fun day! im just so happy kasi lately all im thinking
-                    of is ikaw. I MISS YOU SO MUCH. I WAS SO SAD KASI I DIDNT GET TO CELEBRATE MY BIRTHDAY WITH YOU.
-                    TAPOS PALAGI PAKONG NAGTATAMPO GABI GABI KASI I WANT BEBETIME PERO NASA IBANG SERVER KA!!! HAYS.
-                    anyway... it's your BIRTHMONTH!!!!!! :p AKALA MO IKAW LANG MAY SURPRISE!!! grrr it's still in
-                    progress ksksskskkskk so you just focus on here muna!!! HAHAHAHAHHA. I LOVE YOU SO FUCKING MUCH. oh
-                    i put a song below that you can play :P my girl, my girl, my girl, you will be my girl, my girl, my
-                    girl, my girl, you will be my WORLD!!!!!</p>
+        <div id="default-styled-tab-content">
+            <!-- home -->
+            <div class="hidden p-4 rounded-lg h-[375px] overflow-y-scroll" id="styled-profile" role="tabpanel"
+                aria-labelledby="profile-tab" data-aos="fade-down" data-aos-duration="2000">
+                <div class="grid grid-cols-5 gap-4 h-full">
+                    <div class="col-span-2 flex items-center justify-center relative">
+
+                        <img src="assets/img/gallery/pris1.jpg" alt="Polaroid 1"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-6deg] border-4 border-white top-36 left-5"
+                            data-aos="fade-in" data-aos-duration="3000">
+
+                        <img src="assets/img/gallery/pris2.jpg" alt="Polaroid 2"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[6deg] border-4 border-white top-1 left-5"
+                            data-aos="fade-down" data-aos-duration="4000">
+
+                        <img src="assets/img/gallery/pris3.jpg" alt="Polaroid 3"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-15deg] border-4 border-white top-12 left-36"
+                            data-aos="fade-up" data-aos-duration="5000">
+
+                        <img src="assets/img/gallery/pris4.jpg" alt="Polaroid 4"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[8deg] border-4 border-white top-52 left-32"
+                            data-aos="fade-right" data-aos-duration="6000">
+
+                        <img src="assets/img/gallery/pris5.jpg" alt="Polaroid 4"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[8deg] border-4 border-white top-72 left-2"
+                            data-aos="fade-right" data-aos-duration="6000">
+
+                        <img src="assets/img/gallery/pris6.jpg" alt="Polaroid 4"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-5deg] border-4 border-white top-80 left-32"
+                            data-aos="fade-right" data-aos-duration="6000">
+
+                        <img src="assets/img/gallery/pris7.jpg" alt="Polaroid 4"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-8deg] border-4 border-white top-[430px] left-2"
+                            data-aos="fade-right" data-aos-duration="6000">
+
+                        <img src="assets/img/gallery/pris10.jpg" alt="Polaroid 4"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[8deg] border-4 border-white top-[470px] left-32"
+                            data-aos="fade-right" data-aos-duration="6000">
+                    </div>
+                    <div class="col-span-3 bg-[#fafafa] p-5 rounded-xl">
+                        <p class="text-lg text-black text-justify">
+                            hi bebiiiii!!! ksksskksksks. i made this website for u since it's
+                            october!!!! your birthmonth ksksksksksksk grrrr. sinimulan ko lang to kanina. i was about to
+                            finish
+                            this tonight but instead... ;; ako nasurprise!!!!!!!! HAHAHAHAHAHAHA. i had fun todae. thank
+                            you so
+                            much for surprising and making my tiring day a fun day! im just so happy kasi lately all im
+                            thinking
+                            of is ikaw. I MISS YOU SO MUCH. I WAS SO SAD KASI I DIDNT GET TO CELEBRATE MY BIRTHDAY WITH
+                            YOU.
+                            TAPOS PALAGI PAKONG NAGTATAMPO GABI GABI KASI I WANT BEBETIME PERO NASA IBANG SERVER KA!!!
+                            HAYS.
+                            anyway... it's your BIRTHMONTH!!!!!! :p AKALA MO IKAW LANG MAY SURPRISE!!! grrr it's still
+                            in
+                            progress ksksskskkskk so you just focus on here muna!!! HAHAHAHAHHA. I LOVE YOU SO FUCKING
+                            MUCH. oh
+                            i put a song below that you can play :P my girl, my girl, my girl, you will be my girl, my
+                            girl, my
+                            girl, my girl, you will be my WORLD!!!!!
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="hidden p-4 rounded-lg h-[375px] overflow-y-auto" id="styled-dashboard" role="tabpanel"
-                aria-labelledby="dashboard-tab">
+            <!-- gallery -->
+            <div class="hidden p-4 rounded-lg h-[375px] overflow-y-auto" id="styled-gallery" role="tabpanel"
+                aria-labelledby="gallery-tab">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="grid gap-4">
                         <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/1.jpg" alt="">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/1.jpg" alt="">
                         </div>
                         <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/2.jpg" alt="">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/2.jpg" alt="">
                         </div>
                         <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/3.jpg" alt="">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/3.jpg" alt="">
+                        </div>
+                        <div class="h-6"></div>
+                    </div>
+                    <div class="grid gap-4">
+                        <div class="h-6"></div>
+                        <div class="h-64">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/4.jpg" alt="">
+                        </div>
+                        <div class="h-64">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/5.jpg" alt="">
+                        </div>
+                        <div class="h-64">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/6.jpg" alt="">
                         </div>
                     </div>
                     <div class="grid gap-4">
                         <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/4.jpg" alt="">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/7.jpg" alt="">
                         </div>
                         <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/5.jpg" alt="">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/13.jpg" alt="">
                         </div>
                         <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/6.jpg" alt="">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/9.jpg" alt="">
                         </div>
+                        <div class="h-6"></div>
                     </div>
                     <div class="grid gap-4">
+                        <div class="h-6"></div>
                         <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/7.jpg" alt="">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/14.jpg" alt="">
                         </div>
                         <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/13.jpg" alt="">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/15.jpg" alt="">
                         </div>
                         <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/9.jpg" alt="">
-                        </div>
-                    </div>
-                    <div class="grid gap-4">
-                        <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/14.jpg" alt="">
-                        </div>
-                        <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/15.jpg" alt="">
-                        </div>
-                        <div class="h-64">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/gallery/12.jpg" alt="">
+                            <img class="h-full w-full object-cover rounded-lg" loading="lazy"
+                                src="assets/img/gallery/12.jpg" alt="">
                         </div>
                     </div>
+                </div>
+            </div>
+            <!-- folders/letters -->
+            <div class="hidden p-4 rounded-lg h-[375px] overflow-y-auto" id="styled-letters" role="tabpanel"
+                aria-labelledby="letters-tab">
+
+                <button id="goBackBtn"
+                    class="hidden mb-4 px-4 py-2 bg-[#F2BDDE] text-black rounded-lg hover:bg-[#ff6ac6]"
+                    onclick="showFolders()">
+                    ← Go Back
+                </button>
+
+                <!-- Grid of folders -->
+                <div id="foldersGrid" class="grid grid-cols-2 md:grid-cols-4 gap-16"></div>
+
+                <!-- Letter content -->
+                <div id="folderContent" class="hidden">
+                    <h2 id="folderTitle" class="text-2xl font-bold mb-4"></h2>
+                    <p id="folderText" class="text-gray-700 text-lg">
+                        Content for this day will show here 🎉
+                    </p>
                 </div>
             </div>
 
-            <div class="hidden p-4 rounded-lg h-[375px] overflow-y-auto" id="styled-settings" role="tabpanel"
-                aria-labelledby="settings-tab">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-16">
-                    <div class="grid gap-16">
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 01, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 02, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 03, 2025
-                        </div>
-                    </div>
-                    <div class="grid gap-16">
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 04, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 05, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 06, 2025
-                        </div>
-                    </div>
-                    <div class="grid gap-16">
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 07, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 08, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 09, 2025
-                        </div>
-                    </div>
-                    <div class="grid gap-16">
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 10, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 11, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 12, 2025
-                        </div>
-                    </div>
-                    <div class="grid gap-16">
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 13, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 14, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 15, 2025
-                        </div>
-                    </div>
-                    <div class="grid gap-16">
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 16, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 17, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 18, 2025
-                        </div>
-                    </div>
-                    <div class="grid gap-16">
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 19, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 20, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 21, 2025
-                        </div>
-                    </div>
-                    <div class="grid gap-16">
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 22, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 23, 2025
-                        </div>
-                        <div class="h-28 text-center">
-                            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt=""><br>
-                            Oct. 24, 2025
-                        </div>
-                    </div>
+            <!-- Popover for locked days -->
+            <div data-popover id="locked-popover" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 
+                        transition-opacity duration-300 bg-white border border-gray-200 
+                        rounded-lg shadow-xs opacity-0 dark:text-gray-400 
+                        dark:border-gray-100 dark:bg-gray-200">
+                <div
+                    class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-100 dark:bg-gray-200">
+                    <h3 id="locked-title" class="font-semibold text-gray-900 dark:text-white">Locked Letter</h3>
                 </div>
+                <div class="px-3 py-2">
+                    <p id="locked-message">This letter is not available yet!!! grrrrrrrr ;;</p>
+                </div>
+                <div data-popper-arrow></div>
             </div>
             <!-- <div class="hidden p-4 rounded-lg h-[375px] bg-gray-50" id="styled-contacts" role="tabpanel"
                 aria-labelledby="contacts-tab">
-                <p class="text-sm text-black">This is some placeholder content the <strong
-                        class="font-medium text-gray-800">Contacts tab's associated content</strong>.
-                    Clicking
-                    another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
-                    control
-                    the content visibility and styling.</p>
+               
             </div> -->
         </div>
     </div>
@@ -393,18 +372,18 @@
         const currentTimeEl = document.getElementById("currentTime");
         const durationEl = document.getElementById("duration");
 
-        // Song duration in seconds (3 min 07 sec = 187s)
+        // song duration in seconds (3 min 07 sec = 187s)
         const SONG_DURATION = 187;
         progressBar.max = SONG_DURATION;
 
-        // Format time (mm:ss)
+        // format time (mm:ss)
         function formatTime(seconds) {
             const m = Math.floor(seconds / 60);
             const s = Math.floor(seconds % 60);
             return `${m}:${s < 10 ? "0" : ""}${s}`;
         }
 
-        // Play / Pause toggle
+        // play / pause toggle
         playButton.addEventListener("change", () => {
             if (playButton.checked) {
                 audio.play();
@@ -413,21 +392,100 @@
             }
         });
 
-        // Update progress bar + current time
+        // update progress bar + current time
         audio.addEventListener("timeupdate", () => {
             progressBar.value = Math.floor(audio.currentTime);
             currentTimeEl.textContent = formatTime(audio.currentTime);
         });
 
-        // Scrub (seek) when moving range input
+        // scrub (seek) when moving range input
         progressBar.addEventListener("input", () => {
             audio.currentTime = progressBar.value;
         });
 
-        // When audio metadata is loaded, set duration text
+        // when audio metadata is loaded, set duration text
         audio.addEventListener("loadedmetadata", () => {
             durationEl.textContent = formatTime(audio.duration || SONG_DURATION);
         });
+    </script>
+
+    <!-- folders script -->
+    <script>
+        // Get Philippines time (UTC+8)
+        function getPHDate() {
+            const now = new Date();
+            return new Date(now.toLocaleString("en-US", { timeZone: "Asia/Manila" }));
+        }
+
+        // const today = 24;
+        const today = getPHDate().getDate();
+        const foldersGrid = document.getElementById("foldersGrid");
+        const content = document.getElementById("folderContent");
+        const goBackBtn = document.getElementById("goBackBtn");
+        const folderTitle = document.getElementById("folderTitle");
+        const folderText = document.getElementById("folderText");
+
+        // Popover references
+        const lockedPopover = document.getElementById("locked-popover");
+        const lockedTitle = document.getElementById("locked-title");
+        const lockedMessage = document.getElementById("locked-message");
+
+        let letters = {};
+
+        fetch("assets/json/letters.json")
+            .then(response => response.json())
+            .then(data => {
+                letters = data;
+            });
+
+        // Generate folders (Oct 1 → Oct 24)
+        for (let day = 1; day <= 24; day++) {
+            const folder = document.createElement("div");
+            folder.className = "relative h-28 text-center folder cursor-pointer";
+            folder.dataset.day = day;
+
+            folder.innerHTML = `
+            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt="">
+            <span class="block">Oct. ${day.toString().padStart(2, "0")}, 2025</span>
+        `;
+
+            if (day > today) {
+                // 🔒 Future days locked
+                const lock = document.createElement("div");
+                lock.className = "absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg";
+                lock.innerHTML = `<span class="text-3xl text-white">🔒</span>`;
+                folder.appendChild(lock);
+
+                // Popover on click
+                folder.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    lockedTitle.textContent = "Locked Letter";
+                    lockedMessage.textContent = `This little love note isn’t ready yet!!! grrrrr. It'll unlock on October ${day}, 2025. Stay excited! ✨ ksksksks`;
+
+                    const popover = new window.Popover(lockedPopover, folder);
+                    popover.show();
+                });
+            } else {
+                // ✅ Past & today are clickable
+                folder.addEventListener("click", () => {
+                    foldersGrid.classList.add("hidden");
+                    content.classList.remove("hidden");
+                    goBackBtn.classList.remove("hidden");
+
+                    folderTitle.textContent = `October ${day}, 2025`;
+                    folderText.textContent = letters[day] || "No letter yet ✨";
+                });
+            }
+
+            foldersGrid.appendChild(folder);
+        }
+
+        // Go back button
+        function showFolders() {
+            content.classList.add("hidden");
+            goBackBtn.classList.add("hidden");
+            foldersGrid.classList.remove("hidden");
+        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
