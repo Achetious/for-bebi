@@ -160,6 +160,10 @@
 </head>
 
 <body class="flex justify-center items-center flex-col overflow-hidden">
+    <audio id="birthdayAudio" autoplay loop>
+        <source src="assets/songs/happy-birthday.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <div class="birthday-text" data-aos="fade-in" data-aos-duration="3000">
         Happy Birthday!!!!!! 🎂💖
@@ -169,15 +173,20 @@
 
     <div id="stars"></div>
 
-    <audio id="birthdayAudio" autoplay loop>
-        <source src="assets/songs/happy-birthday.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+
 
     <!-- confetti -->
     <script src="https://run.confettipage.com/here.js"
         data-confetticode="U2FsdGVkX1/7t4pfVcXQhoULsK9O8aw5+OX1Rq2uiCr6ezY/fMkkx91Hxpq1Nxn07mKZldaCiM1Q3KY+w0oQHhwFvl6HKPEByJkA0xy0jd+IjPg4virD0dkwBUx2Utr+l/AhuHr3X348yCwiODBtqmg3cvOTZklqcVgVed9+2FnpdkKDYyM6Qz4+OzOcNhtvu/0++agRLoCb1FvJ8lelXltZKFJlwJkvGstL2l7aJSCwe1gDOmO/YYIAZJk5exnAZvPyVbMHwu+KSvGMx4nxS1CQ06rKGdBXLBZ3iR5RGypLvAzvPNr0D8unromoyGdp6IxgD0neutz1FnvCFWk588N1hapwchdGMD7iBhGpX9iJqY4J5bddZLw8PkbqAlNR3HMeHibnlwnrlsLfKJqsceWQuM66PF44ELtA0Pctyq7G6fEdjLB7XXtRPeC4frjiBGgzd6AcJ/xw0j8nI80nccnB3SLzVRKeLbUX6vzvbYIP7GltgM8KovhOl8+ZKB6Ij+mVlq+PglmUZ3jcJQLyqGxCapF4ibeyILwyuST1TnuUWuj89KD8uQi7L5EyqpxUlmO2b+ELW/rrHzf0In5CGnxqkwljTq6d8Kox/89Rlc6fcDRqCqXTHQVvS78xqAGmG5PsDMwVxREuIweqMNhBmD/PR2NyAhVdMO9vbsV78VwyMA0aC8mpd5ersiJAhlJIacKROoSdO0RcECTmT+1UfQBe2lY5vKeSmK7Hkt2hMYgZGVVppleBxvMOAGo4z9h4NMQMnwjZmXXgZJ9k34YI9Q=="></script>
     <script>
+        // Play birthday song (needed for browsers that block autoplay with sound)
+        document.addEventListener("click", () => {
+            const audio = document.getElementById("birthdayAudio");
+            if (audio.paused) {
+                audio.play();
+            }
+        });
+
         // 🎈 Auto-generate balloons
         const balloonContainer = document.getElementById("balloons");
         const balloonImages = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png"];
@@ -255,14 +264,6 @@
             }, 4000);
         }
         setInterval(createStar, 800);
-
-        // Play birthday song (needed for browsers that block autoplay with sound)
-        document.addEventListener("click", () => {
-            const audio = document.getElementById("birthdayAudio");
-            if (audio.paused) {
-                audio.play();
-            }
-        });
     </script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
