@@ -417,8 +417,8 @@
             return new Date(now.toLocaleString("en-US", { timeZone: "Asia/Manila" }));
         }
 
-        // const today = 24;
-        const today = getPHDate().getDate();
+        const today = 24;
+        // const today = getPHDate().getDate();
         const foldersGrid = document.getElementById("foldersGrid");
         const content = document.getElementById("folderContent");
         const goBackBtn = document.getElementById("goBackBtn");
@@ -473,7 +473,25 @@
                     goBackBtn.classList.remove("hidden");
 
                     folderTitle.textContent = `October ${day}, 2025`;
-                    folderText.textContent = letters[day] || "No letter yet ✨";
+                    folderText.innerHTML = letters[day] || "No letter yet ✨";
+
+                    if (day === 24) {
+                        if (!document.getElementById("clickMeBtn")) {
+                            const btnWrapper = document.createElement("div");
+                            btnWrapper.className = "flex justify-center mt-6";
+
+                            const btn = document.createElement("button");
+                            btn.id = "clickMeBtn";
+                            btn.textContent = "Click Me 💌";
+                            btn.className = "px-6 py-3 bg-[#F2BDDE] text-white text-lg font-semibold rounded-xl shadow-md hover:bg-[#ff6ac6] transition cursor-pointer animate-bounce-slow";
+                            btn.addEventListener("click", () => {
+                                window.location.href = "birthday.html";
+                            });
+
+                            btnWrapper.appendChild(btn);
+                            folderText.insertAdjacentElement("afterend", btnWrapper);
+                        }
+                    }
                 });
             }
 

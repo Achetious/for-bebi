@@ -2,6 +2,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single+Ink:wght@100..900&display=swap");
 @theme {
   --font-bitcount: "Bitcount Prop Single Ink", sans-serif;
+
+  @keyframes bounce-slow {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 1.5s infinite;
 }
 
 body {
