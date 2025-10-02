@@ -417,8 +417,8 @@
             return new Date(now.toLocaleString("en-US", { timeZone: "Asia/Manila" }));
         }
 
-        const today = 24;
-        // const today = getPHDate().getDate();
+        // const today = 24;
+        const today = getPHDate().getDate();
         const foldersGrid = document.getElementById("foldersGrid");
         const content = document.getElementById("folderContent");
         const goBackBtn = document.getElementById("goBackBtn");
