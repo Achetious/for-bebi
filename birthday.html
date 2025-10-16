@@ -19,8 +19,12 @@
             display: none !important;
         }
 
+        html,
         body {
             overflow: hidden;
+            height: 100%;
+            touch-action: none;
+            overscroll-behavior: none;
         }
 
         .birthday-text {
@@ -211,6 +215,11 @@
         style="position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
 
     <script>
+        document.body.addEventListener('touchmove', function (e) {
+            e.preventDefault();
+        }, { passive: false });
+    </script>
+    <script>
         const gifFolder = "assets/video/";
         const gifFiles = [
             "cat-dance-dancing-cat.gif",
@@ -272,6 +281,7 @@
         });
     </script>
     <script>
+
         /* --------- Physics confetti emitter (bottom-left & bottom-right) --------- */
         (() => {
             const canvas = document.getElementById('confettiCanvas');
@@ -587,10 +597,23 @@
         setInterval(createStar, 800);
 
         // Play birthday song (needed for browsers that block autoplay with sound)
-        document.addEventListener("click", () => {
+        document.addEventListener("DOMContentLoaded", () => {
             const audio = document.getElementById("birthdayAudio");
-            if (audio.paused) {
-                audio.play();
+
+            // Try to play automatically (may fail silently)
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    // Wait for user interaction if blocked
+                    document.body.addEventListener("click", () => {
+                        audio.play();
+                    }, { once: true });
+
+                    // Also allow touchstart for mobile
+                    document.body.addEventListener("touchstart", () => {
+                        audio.play();
+                    }, { once: true });
+                });
             }
         });
     </script>
