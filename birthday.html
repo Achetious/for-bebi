@@ -219,6 +219,7 @@
             e.preventDefault();
         }, { passive: false });
     </script>
+
     <script>
         const gifFolder = "assets/video/";
         const gifFiles = [
@@ -472,7 +473,7 @@
             // 🕐 Stop shooting completely after 10 seconds
             setTimeout(() => {
                 clearInterval(burstInterval);
-            }, 10000);
+            }, 5000);
 
             // Optionally: pop both emitters once when user clicks anywhere (adds playful interaction)
             document.addEventListener('click', (e) => {
