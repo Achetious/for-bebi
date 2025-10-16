@@ -24,6 +24,7 @@
         }
 
         .birthday-text {
+            z-index: 5;
             font-size: 4rem;
             font-weight: bold;
             text-align: center;
@@ -77,6 +78,30 @@
             color: gold;
             font-size: 50px;
             animation: twinkle 3s infinite ease-in-out alternate;
+        }
+
+        .gif-image {
+            position: fixed;
+            width: 150px;
+            height: auto;
+            opacity: 0;
+            z-index: 2;
+            /* behind Happy Birthday text but above background */
+            animation: fadeInGif 1.5s ease forwards;
+            pointer-events: none;
+            /* avoid blocking clicks on balloons */
+        }
+
+        @keyframes fadeInGif {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         @keyframes smooth-rainbow {
@@ -181,11 +206,307 @@
 
     <div id="stars"></div>
 
-
-
     <!-- confetti -->
-    <script src="https://run.confettipage.com/here.js"
-        data-confetticode="U2FsdGVkX1/7t4pfVcXQhoULsK9O8aw5+OX1Rq2uiCr6ezY/fMkkx91Hxpq1Nxn07mKZldaCiM1Q3KY+w0oQHhwFvl6HKPEByJkA0xy0jd+IjPg4virD0dkwBUx2Utr+l/AhuHr3X348yCwiODBtqmg3cvOTZklqcVgVed9+2FnpdkKDYyM6Qz4+OzOcNhtvu/0++agRLoCb1FvJ8lelXltZKFJlwJkvGstL2l7aJSCwe1gDOmO/YYIAZJk5exnAZvPyVbMHwu+KSvGMx4nxS1CQ06rKGdBXLBZ3iR5RGypLvAzvPNr0D8unromoyGdp6IxgD0neutz1FnvCFWk588N1hapwchdGMD7iBhGpX9iJqY4J5bddZLw8PkbqAlNR3HMeHibnlwnrlsLfKJqsceWQuM66PF44ELtA0Pctyq7G6fEdjLB7XXtRPeC4frjiBGgzd6AcJ/xw0j8nI80nccnB3SLzVRKeLbUX6vzvbYIP7GltgM8KovhOl8+ZKB6Ij+mVlq+PglmUZ3jcJQLyqGxCapF4ibeyILwyuST1TnuUWuj89KD8uQi7L5EyqpxUlmO2b+ELW/rrHzf0In5CGnxqkwljTq6d8Kox/89Rlc6fcDRqCqXTHQVvS78xqAGmG5PsDMwVxREuIweqMNhBmD/PR2NyAhVdMO9vbsV78VwyMA0aC8mpd5ersiJAhlJIacKROoSdO0RcECTmT+1UfQBe2lY5vKeSmK7Hkt2hMYgZGVVppleBxvMOAGo4z9h4NMQMnwjZmXXgZJ9k34YI9Q=="></script>
+    <canvas id="confettiCanvas"
+        style="position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
+
+    <script>
+        const gifFolder = "assets/video/";
+        const gifFiles = [
+            "cat-dance-dancing-cat.gif",
+            "catshakira-cat.gif",
+            "giphy.gif",
+            "giphy (1).gif",
+            "good-morning.gif",
+            "mus8029-cat-dance.gif",
+            "1231.gif"
+        ];
+
+        let gifsShown = false;
+
+        function showAllGifs() {
+            const usedPositions = [];
+            const margin = 200; // keeps gifs away from edges
+
+            gifFiles.forEach(file => {
+                const gif = document.createElement("img");
+                gif.src = gifFolder + file;
+                gif.className = "gif-image";
+
+                let x, y;
+                let overlapping;
+
+                // Try random positions until one doesn’t overlap
+                do {
+                    x = Math.random() * (window.innerWidth - 200);
+                    y = Math.random() * (window.innerHeight - 200);
+                    overlapping = usedPositions.some(pos => {
+                        return (
+                            Math.abs(pos.x - x) < 160 &&
+                            Math.abs(pos.y - y) < 160
+                        );
+                    });
+                } while (overlapping);
+
+                usedPositions.push({ x, y });
+
+                gif.style.left = x + "px";
+                gif.style.top = y + "px";
+
+                document.body.appendChild(gif);
+
+                // Fade in smoothly
+                setTimeout(() => {
+                    gif.style.opacity = "1";
+                }, 100);
+            });
+        }
+
+        // 🎵 Trigger when song reaches 23 seconds
+        const audio = document.getElementById("birthdayAudio");
+        audio.addEventListener("timeupdate", () => {
+            if (audio.currentTime >= 23 && !gifsShown) {
+                gifsShown = true;
+                showAllGifs();
+            }
+        });
+    </script>
+    <script>
+        /* --------- Physics confetti emitter (bottom-left & bottom-right) --------- */
+        (() => {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Resize canvas to device pixel ratio for crispness
+            function resize() {
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = Math.floor(window.innerWidth * dpr);
+                canvas.height = Math.floor(window.innerHeight * dpr);
+                canvas.style.width = window.innerWidth + 'px';
+                canvas.style.height = window.innerHeight + 'px';
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            // Particle list
+            const particles = [];
+
+            // Colors for confetti
+            const COLORS = ['#ff4d4d', '#ffd11a', '#66ff66', '#3399ff', '#ff66cc', '#ff7f50', '#8a2be2'];
+
+            // Physics parameters (tweak for different behavior)
+            const GRAVITY = 0.1;         // pulls pieces down
+            const FALL_GRAVITY = 0.05;    // gravity after peak (to make falling slower)
+            const AIR_DRAG = 0.995;       // horizontal drag
+            const ROT_DRAG = 0.99;
+            const WIND_VARIATION = 0.02;  // small horizontal wind noise
+            const MAX_PARTICLES = 900;
+
+            // Particle shape types: 0 = rectangle (strip), 1 = circle
+            function rand(a, b) { return a + Math.random() * (b - a); }
+            function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+            class Particle {
+                constructor(x, y, vx, vy, size, color, shape) {
+                    this.x = x;
+                    this.y = y;
+                    this.vx = vx;
+                    this.vy = vy;
+                    this.size = size;
+                    this.color = color;
+                    this.shape = shape;
+                    this.rotation = rand(0, Math.PI * 2);
+                    this.vr = rand(-0.2, 0.2); // rotation speed
+                    this.age = 0;
+                    this.life = rand(240, 700); // frames until forced removal (safety)
+                    this.hasPeaked = false; // detect when vy changes sign (starts to fall)
+                    this.opacity = 1;
+                }
+
+                update() {
+                    // small random wind/air gust
+                    this.vx += (Math.random() - 0.5) * WIND_VARIATION;
+
+                    // apply gravity: stronger upward movement uses GRAVITY, when falling use smaller gravity to slow descent
+                    if (!this.hasPeaked) {
+                        // still going up (vy < 0) - normal gravity
+                        this.vy += GRAVITY;
+                    } else {
+                        // falling - gentler gravity so they float down slowly
+                        this.vy += FALL_GRAVITY;
+                    }
+
+                    // detect peak (when vertical velocity flips from negative to positive)
+                    if (!this.hasPeaked && this.vy > 0) {
+                        this.hasPeaked = true;
+                        // add a slight random sideways boost on peak for variety
+                        this.vx += rand(-0.6, 0.6);
+                        this.vr *= 1.5;
+                    }
+
+                    // apply drag
+                    this.vx *= AIR_DRAG;
+                    this.vy *= 0.999; // minor vertical dampening
+                    this.rotation += this.vr * ROT_DRAG;
+
+                    // move
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    // fade out near end of life or if low-speed on ground
+                    this.age++;
+                    if (this.age > this.life * 0.7) {
+                        this.opacity = Math.max(0, 1 - (this.age - this.life * 0.7) / (this.life * 0.3));
+                    }
+                }
+
+                draw(ctx) {
+                    ctx.save();
+                    ctx.globalAlpha = this.opacity;
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation);
+                    if (this.shape === 0) {
+                        // rectangle confetti strip
+                        ctx.fillStyle = this.color;
+                        ctx.fillRect(-this.size / 2, -this.size / 6, this.size, this.size / 3);
+                    } else {
+                        // simple round confetti
+                        ctx.fillStyle = this.color;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                }
+
+                offscreen(w, h) {
+                    return (this.x < -50 || this.x > w + 50 || this.y > h + 120 || this.age > this.life);
+                }
+            }
+
+            // Create a burst of confetti emitted from (x, y)
+            // dir: 'left' or 'right' emitter - determines horizontal bias
+            function emitBurst(x, y, dir, count = 18) {
+                for (let i = 0; i < count; i++) {
+                    if (particles.length > MAX_PARTICLES) break;
+                    // initial velocity: mostly upward, with horizontal bias depending on emitter side
+                    const spread = 0.9; // how wide the cone is
+                    const angle = rand(-Math.PI * 0.9 / 2, Math.PI * 0.9 / 2); // angle from upward
+                    // base speed between
+                    const speed = rand(6, 13); // shoot higher (reaches ~75% screen height)
+
+                    // convert polar to vx,vy: upward = vy negative
+                    let vx = Math.sin(angle) * speed;
+                    let vy = -Math.cos(angle) * speed;
+
+                    // bias so left emitter pushes to the right and vice versa (like a blower)
+                    if (dir === 'left') vx = Math.abs(vx) * rand(0.6, 1.2);
+                    if (dir === 'right') vx = -Math.abs(vx) * rand(0.6, 1.2);
+
+                    // slight random offsets so pieces start at different places near the popper
+                    const px = x + rand(-12, 18);
+                    const py = y + rand(-6, 6);
+
+                    const size = rand(6, 14);
+                    const color = choice(COLORS);
+                    const shape = Math.random() < 0.7 ? 0 : 1;
+
+                    particles.push(new Particle(px, py, vx, vy, size, color, shape));
+                }
+            }
+
+            // Emitters at bottom-left and bottom-right
+            const emitterLeft = { x: 40, y: window.innerHeight - 40, dir: 'left' };
+            const emitterRight = { x: window.innerWidth - 40, y: window.innerHeight - 40, dir: 'right' };
+
+            // Update emitter positions on resize (keep them near corners)
+            function updateEmitters() {
+                emitterLeft.y = window.innerHeight - 40;
+                emitterRight.x = window.innerWidth - 40;
+                emitterRight.y = window.innerHeight - 40;
+            }
+            window.addEventListener('resize', () => {
+                updateEmitters();
+                resize();
+            });
+
+            // Emit piece-by-piece like a blower: small bursts repeatedly
+            // returns an interval id you can clear if you want to stop
+            function startContinuousEmitter(emitter, burstCount = 8, intervalMs = 120) {
+                // keep emitting forever (or until user stops)
+                const id = setInterval(() => {
+                    emitBurst(emitter.x, emitter.y, emitter.dir, burstCount);
+                }, intervalMs);
+                return id;
+            }
+
+            // Create occasional larger celebratory bursts
+            function occasionalBigBurst() {
+                // random small delay between big bursts
+                const ms = rand(2800, 8000);
+                setTimeout(() => {
+                    // big burst from both emitters
+                    emitBurst(emitterLeft.x, emitterLeft.y, emitterLeft.dir, Math.floor(rand(30, 70)));
+                    emitBurst(emitterRight.x, emitterRight.y, emitterRight.dir, Math.floor(rand(30, 70)));
+                    occasionalBigBurst();
+                }, ms);
+            }
+
+            // Auto start
+            let burstInterval = setInterval(() => {
+                emitBurst(emitterLeft.x, emitterLeft.y, emitterLeft.dir, Math.floor(rand(20, 40)));
+                emitBurst(emitterRight.x, emitterRight.y, emitterRight.dir, Math.floor(rand(20, 40)));
+            }, 1000);
+
+            // 🕐 Stop shooting completely after 10 seconds
+            setTimeout(() => {
+                clearInterval(burstInterval);
+            }, 10000);
+
+            // Optionally: pop both emitters once when user clicks anywhere (adds playful interaction)
+            document.addEventListener('click', (e) => {
+                // small localised burst near click too
+                emitBurst(e.clientX, e.clientY, Math.random() < 0.5 ? 'left' : 'right', 26);
+            });
+
+            // Main animation loop
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+
+                // update particles and draw
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.update();
+                    p.draw(ctx);
+
+                    // remove offscreen or dead particles
+                    if (p.offscreen(vw, vh)) {
+                        particles.splice(i, 1);
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            // Public control (optional)
+            window.confettiPoppers = {
+                emitLeftBurst: (count = 30) => emitBurst(emitterLeft.x, emitterLeft.y, emitterLeft.dir, count),
+                emitRightBurst: (count = 30) => emitBurst(emitterRight.x, emitterRight.y, emitterRight.dir, count),
+                stop: () => { clearInterval(leftInterval); clearInterval(rightInterval); },
+                start: () => {
+                    // not strictly necessary since we started automatically
+                }
+            };
+
+        })();
+    </script>
+
     <script>
         // 🎈 Auto-generate balloons
         const balloonContainer = document.getElementById("balloons");
