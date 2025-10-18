@@ -15,10 +15,12 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
+
 <body class="flex justify-center items-center flex-col">
-    <div class="h-[500px] w-[900px] rounded-2xl bg-[#BDEEF2] mb-14 p-8 shadow-[12px_12px_0px_rgba(107,114,128,1)]"
+    <div class="cardd h-[500px] max-lg:w-10/12 w-[900px] rounded-2xl bg-[#BDEEF2] mb-14 min-lg:p-8  shadow-[12px_12px_0px_rgba(107,114,128,1)] flex flex-col justify-center items-center gap-5"
         data-aos="fade-in" data-aos-duration="1500">
-        <div class="mb-4 border-b border-gray-200 dark:border-gray-700" data-aos="fade-down" data-aos-duration="1500">
+        <div class="mb-4 border-b border-gray-200 dark:border-gray-700 w-full px-5" data-aos="fade-down"
+            data-aos-duration="1500">
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab"
                 data-tabs-toggle="#default-styled-tab-content"
                 data-tabs-active-classes="text-white hover:text-white dark:text-white dark:hover:text-white border- dark:border-white bg-[#F2BDDE]"
@@ -53,65 +55,69 @@
             <!-- home -->
             <div class="hidden p-4 rounded-lg h-[375px] overflow-y-scroll" id="styled-profile" role="tabpanel"
                 aria-labelledby="profile-tab">
-                <div class="grid grid-cols-5 gap-4 h-full">
-                    <div class="col-span-2 flex items-center justify-center relative">
+                <div
+                    class="grid lg:grid-cols-5 lg:grid-rows-1 max-lg:grid-cols-1 max-lg:grid-rows-2 gap-4 lg:h-full max-lg:h-auto">
 
+                    <!-- Gallery Section -->
+                    <div
+                        class="lg:col-span-2 max-lg:order-1 flex flex-wrap justify-center relative h-[500px] max-lg:h-[650px]">
                         <img src="assets/img/gallery/pris1.jpg" alt="Polaroid 1"
-                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-6deg] border-4 border-white top-36 left-5"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-6deg] border-4 border-white top-36 max-lg:left-42 lg:left-5 max-md:left-5"
                             data-aos="fade-in" data-aos-duration="3000">
-
                         <img src="assets/img/gallery/pris2.jpg" alt="Polaroid 2"
-                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[6deg] border-4 border-white top-1 left-5"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[6deg] border-4 border-white top-1 max-lg:left-42 lg:left-5 max-md:left-5"
                             data-aos="fade-down" data-aos-duration="4000">
-
                         <img src="assets/img/gallery/pris3.jpg" alt="Polaroid 3"
-                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-15deg] border-4 border-white top-12 left-36"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-15deg] border-4 border-white top-12 max-lg:left-72 lg:left-36 max-md:left-36"
                             data-aos="fade-up" data-aos-duration="5000">
-
                         <img src="assets/img/gallery/pris4.jpg" alt="Polaroid 4"
-                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[8deg] border-4 border-white top-52 left-32"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[8deg] border-4 border-white top-52 max-lg:left-72 lg:left-32 max-md:left-32"
                             data-aos="fade-right" data-aos-duration="6000">
-
-                        <img src="assets/img/gallery/pris5.jpg" alt="Polaroid 4"
-                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[8deg] border-4 border-white top-72 left-2"
+                        <img src="assets/img/gallery/pris5.jpg" alt="Polaroid 5"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[8deg] border-4 border-white top-72 max-lg:left-44 lg:left-2 max-md:left-2"
                             data-aos="fade-right" data-aos-duration="6000">
-
-                        <img src="assets/img/gallery/pris6.jpg" alt="Polaroid 4"
-                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-5deg] border-4 border-white top-80 left-32"
+                        <img src="assets/img/gallery/pris6.jpg" alt="Polaroid 6"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-5deg] border-4 border-white top-80 max-lg:left-72 lg:left-32 max-md:left-32"
                             data-aos="fade-right" data-aos-duration="6000">
-
-                        <img src="assets/img/gallery/pris7.jpg" alt="Polaroid 4"
-                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-8deg] border-4 border-white top-[430px] left-2"
+                        <img src="assets/img/gallery/pris7.jpg" alt="Polaroid 7"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[-8deg] border-4 border-white top-[430px] max-lg:left-44 lg:left-2 max-md:left-2"
                             data-aos="fade-right" data-aos-duration="6000">
-
-                        <img src="assets/img/gallery/pris10.jpg" alt="Polaroid 4"
-                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[8deg] border-4 border-white top-[470px] left-32"
+                        <img src="assets/img/gallery/pris10.jpg" alt="Polaroid 8"
+                            class="absolute w-32 h-40 object-cover rounded-lg shadow-lg rotate-[8deg] border-4 border-white top-[470px] max-lg:left-72 lg:left-32 max-md:left-32"
                             data-aos="fade-right" data-aos-duration="6000">
                     </div>
-                    <div class="col-span-3 bg-[#fafafa] p-5 rounded-xl">
-                        <p class="text-lg text-black text-justify">
-                            hi bebiiiii!!! ksksskksksks. i made this website for u since it's
-                            october!!!! your birthmonth ksksksksksksk grrrr. sinimulan ko lang to kanina. i was about to
-                            finish
-                            this tonight but instead... ;; ako nasurprise!!!!!!!! HAHAHAHAHAHAHA. i had fun todae. thank
-                            you so
-                            much for surprising and making my tiring day a fun day! im just so happy kasi lately all im
-                            thinking
-                            of is ikaw. I MISS YOU SO MUCH. I WAS SO SAD KASI I DIDNT GET TO CELEBRATE MY BIRTHDAY WITH
-                            YOU.
-                            TAPOS PALAGI PAKONG NAGTATAMPO GABI GABI KASI I WANT BEBETIME PERO NASA IBANG SERVER KA!!!
-                            HAYS.
-                            anyway... it's your BIRTHMONTH!!!!!! :p AKALA MO IKAW LANG MAY SURPRISE!!! grrr it's still
-                            in
-                            progress ksksskskkskk so you just focus on here muna!!! HAHAHAHAHHA. I LOVE YOU SO FUCKING
-                            MUCH. oh
-                            i put a song below that you can play :P my girl, my girl, my girl, you will be my girl, my
-                            girl, my
-                            girl, my girl, you will be my WORLD!!!!!
+
+                    <!-- Text Section -->
+                    <div class="lg:col-span-3 max-lg:order-2 h-[500px]">
+                        <p class="text-lg text-black text-justify bg-[#fafafa] p-5 rounded-xl">
+                            hi bebiiiii!!! ksksskksksks. i made this website for u since it's october!!!! your
+                            birthmonth
+                            ksksksksksksk
+                            grrrr. sinimulan ko lang to kanina. i was about to finish this tonight but instead... ;; ako
+                            nasurprise!!!!!!!!
+                            HAHAHAHAHAHAHA. i had fun todae. thank you so much for surprising and making my tiring day a
+                            fun day! im
+                            just so
+                            happy kasi lately all im thinking of is ikaw. I MISS YOU SO MUCH. I WAS SO SAD KASI I DIDNT
+                            GET TO
+                            CELEBRATE MY
+                            BIRTHDAY WITH YOU. TAPOS PALAGI PAKONG NAGTATAMPO GABI GABI KASI I WANT BEBETIME PERO NASA
+                            IBANG SERVER
+                            KA!!!
+                            HAYS. anyway... it's your BIRTHMONTH!!!!!! :p AKALA MO IKAW LANG MAY SURPRISE!!! grrr it's
+                            still in
+                            progress
+                            ksksskskkskk so you just focus on here muna!!! HAHAHAHAHHA. I LOVE YOU SO FUCKING MUCH. oh i
+                            put a song
+                            below that
+                            you can play :P my girl, my girl, my girl, you will be my girl, my girl, my girl, my girl,
+                            you will be
+                            my WORLD!!!!!
                         </p>
                     </div>
                 </div>
             </div>
+
             <!-- gallery -->
             <div class="hidden p-4 rounded-lg h-[375px] overflow-y-auto" id="styled-gallery" role="tabpanel"
                 aria-labelledby="gallery-tab">
