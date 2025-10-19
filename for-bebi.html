@@ -15,7 +15,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
-<body class="flex justify-center items-center flex-col">
+<body class="flex justify-center items-center flex-col overflow-hidden w-full h-full">
     <div class="cardd h-[500px] max-lg:w-10/12 w-[900px] rounded-2xl bg-[#BDEEF2] mb-14 p-8 shadow-[12px_12px_0px_rgba(107,114,128,1)] flex flex-col justify-center items-center gap-5"
         data-aos="fade-in" data-aos-duration="1500">
         <div class="mb-4 border-b border-gray-200 dark:border-gray-700 w-full md:px-5 px-0" data-aos="fade-down"
@@ -333,11 +333,13 @@
             content.classList.remove("hidden");
             goBackBtn.classList.remove("hidden");
 
-            // Optional: title can be "Letter #", or blank
-            // document.getElementById("folderTitle").textContent = `💌 Letter ${index + 1}`;
+            // Instantly jump to top (no smooth animation)
+            const container = document.getElementById("styled-letters");
+            container.scrollTop = 0;
+
             document.getElementById("folderText").innerHTML = `
-    <p class="whitespace-pre-line text-gray-800 leading-relaxed">${letter}</p>
-    `;
+                <p class="whitespace-pre-line text-gray-800 leading-relaxed">${letter}</p>
+            `;
         }
 
         function showFolders() {
