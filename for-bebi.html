@@ -16,7 +16,7 @@
 </head>
 
 <body class="flex justify-center items-center flex-col overflow-hidden w-full h-full">
-    <div class="cardd h-[500px] max-lg:w-10/12 w-[900px] rounded-2xl bg-[#BDEEF2] mb-14 p-8 shadow-[12px_12px_0px_rgba(107,114,128,1)] flex flex-col justify-center items-center gap-5"
+    <div class="cardd h-[500px] max-lg:w-10/12 w-[900px] rounded-2xl bg-[#BDEEF2] mb-14 lg:p-8 shadow-[12px_12px_0px_rgba(107,114,128,1)] flex flex-col justify-center items-center gap-5"
         data-aos="fade-in" data-aos-duration="1500">
         <div class="mb-4 border-b border-gray-200 dark:border-gray-700 w-full md:px-5 px-0" data-aos="fade-down"
             data-aos-duration="1500">
@@ -313,13 +313,13 @@
                 folder.dataset.index = index;
 
                 folder.innerHTML = `
-            <div class="flex flex-col items-center">
-                <img class="h-full w-full object-cover rounded-lg shadow-md" src="assets/img/folder.png" alt="folder">
-                <p class="mt-2 text-gray-700 font-medium text-center">
-                    Letter ${index + 1}
-                </p>
-            </div>
-        `;
+                    <div class="flex flex-col items-center">
+                        <img class="h-full w-full object-cover rounded-lg shadow-md" src="assets/img/folder.png" alt="folder">
+                        <p class="mt-2 text-gray-700 font-medium text-center">
+                            Letter ${index + 1}
+                        </p>
+                    </div>
+                `;
 
                 folder.addEventListener("click", () => {
                     showLetter(index);
@@ -342,8 +342,8 @@
             container.scrollTop = 0;
 
             document.getElementById("folderText").innerHTML = `
-        <p class="whitespace-pre-line text-gray-800 leading-relaxed">${letter}</p>
-    `;
+                <p class="whitespace-pre-line text-gray-800 leading-relaxed">${letter}</p>
+            `;
         }
 
         function showFolders() {
