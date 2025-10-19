@@ -293,8 +293,10 @@
         const foldersGrid = document.getElementById("foldersGrid");
         const content = document.getElementById("folderContent");
         const goBackBtn = document.getElementById("goBackBtn");
+        const container = document.getElementById("styled-letters");
 
         let letters = [];
+        let previousScroll = 0; // store scroll position
 
         fetch("assets/json/lettersoffriends.json")
             .then(response => response.json())
@@ -311,13 +313,13 @@
                 folder.dataset.index = index;
 
                 folder.innerHTML = `
-                    <div class="flex flex-col items-center">
-                        <img class="h-full w-full object-cover rounded-lg shadow-md" src="assets/img/folder.png" alt="folder">
-                        <p class="mt-2 text-gray-700 font-medium text-center">
-                            Letter ${index + 1}
-                        </p>
-                    </div>
-                `;
+            <div class="flex flex-col items-center">
+                <img class="h-full w-full object-cover rounded-lg shadow-md" src="assets/img/folder.png" alt="folder">
+                <p class="mt-2 text-gray-700 font-medium text-center">
+                    Letter ${index + 1}
+                </p>
+            </div>
+        `;
 
                 folder.addEventListener("click", () => {
                     showLetter(index);
@@ -328,24 +330,29 @@
         }
 
         function showLetter(index) {
+            // ✅ Save current scroll position
+            previousScroll = container.scrollTop;
+
             const letter = letters[index];
             foldersGrid.classList.add("hidden");
             content.classList.remove("hidden");
             goBackBtn.classList.remove("hidden");
 
-            // Instantly jump to top (no smooth animation)
-            const container = document.getElementById("styled-letters");
+            // Always start letter at the top
             container.scrollTop = 0;
 
             document.getElementById("folderText").innerHTML = `
-                <p class="whitespace-pre-line text-gray-800 leading-relaxed">${letter}</p>
-            `;
+        <p class="whitespace-pre-line text-gray-800 leading-relaxed">${letter}</p>
+    `;
         }
 
         function showFolders() {
             content.classList.add("hidden");
             goBackBtn.classList.add("hidden");
             foldersGrid.classList.remove("hidden");
+
+            // ✅ Restore previous scroll position
+            container.scrollTop = previousScroll;
         }
     </script>
 

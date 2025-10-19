@@ -27,25 +27,25 @@
                 data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-black border-gray-100 hover:border-[#F2BDDE] dark:border-gray-700 dark:hover:text-[#F2BDDE] cursor-pointer"
                 role="tablist">
                 <li class="me-2" role="presentation">
-                    <button class="inline-block p-4 border-b-2 rounded-t-lg font-bold text-lg" id="profile-styled-tab"
-                        data-tabs-target="#styled-profile" type="button" role="tab" aria-controls="profile"
-                        aria-selected="false">home</button>
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg font-bold lg:text-lg max-lg:text-base"
+                        id="profile-styled-tab" data-tabs-target="#styled-profile" type="button" role="tab"
+                        aria-controls="profile" aria-selected="false">home</button>
                 </li>
                 <li class="me-2" role="presentation">
                     <button
-                        class="inline-block p-4 border-b-2 rounded-t-lg font-bold text-lg hover:text-[#F2BDDE] hover:border-[#F2BDDE] dark:hover:text-[#F2BDDE]"
+                        class="inline-block p-4 border-b-2 rounded-t-lg font-bold lg:text-lg max-lg:text-base hover:text-[#F2BDDE] hover:border-[#F2BDDE] dark:hover:text-[#F2BDDE]"
                         id="gallery-styled-tab" data-tabs-target="#styled-gallery" type="button" role="tab"
                         aria-controls="gallery" aria-selected="false">gallery</button>
                 </li>
                 <li class="me-2" role="presentation">
                     <button
-                        class="inline-block p-4 border-b-2 rounded-t-lg font-bold text-lg hover:text-[#F2BDDE] hover:border-[#F2BDDE] dark:hover:text-[#F2BDDE]"
+                        class="inline-block p-4 border-b-2 rounded-t-lg font-bold lg:text-lg max-lg:text-base hover:text-[#F2BDDE] hover:border-[#F2BDDE] dark:hover:text-[#F2BDDE]"
                         id="letters-styled-tab" data-tabs-target="#styled-letters" type="button" role="tab"
                         aria-controls="letters" aria-selected="false">letters</button>
                 </li>
                 <!-- <li role="presentation">
                     <button
-                        class="inline-block p-4 border-b-2 rounded-t-lg font-bold text-lg hover:text-[#F2BDDE] hover:border-[#F2BDDE] dark:hover:text-[#F2BDDE]"
+                        class="inline-block p-4 border-b-2 rounded-t-lg font-bold lg:text-lg max-lg:text-base hover:text-[#F2BDDE] hover:border-[#F2BDDE] dark:hover:text-[#F2BDDE]"
                         id="contacts-styled-tab" data-tabs-target="#styled-contacts" type="button" role="tab"
                         aria-controls="contacts" aria-selected="false">Contacts</button>
                 </li> -->
@@ -461,6 +461,7 @@
     <!-- folders script -->
     <script>
         // Get Philippines time (UTC+8)
+        // Get Philippines time (UTC+8)
         function getPHDate() {
             const now = new Date();
             return new Date(now.toLocaleString("en-US", { timeZone: "Asia/Manila" }));
@@ -473,6 +474,7 @@
         const goBackBtn = document.getElementById("goBackBtn");
         const folderTitle = document.getElementById("folderTitle");
         const folderText = document.getElementById("folderText");
+        const container = document.getElementById("styled-letters"); // scrollable div
 
         // Popover references
         const lockedPopover = document.getElementById("locked-popover");
@@ -480,6 +482,7 @@
         const lockedMessage = document.getElementById("locked-message");
 
         let letters = {};
+        let previousScroll = 0; // 🧠 store previous scroll position
 
         fetch("assets/json/letters.json")
             .then(response => response.json())
@@ -494,9 +497,9 @@
             folder.dataset.day = day;
 
             folder.innerHTML = `
-            <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt="">
-            <span class="block">Oct. ${day.toString().padStart(2, "0")}, 2025</span>
-        `;
+        <img class="h-full w-full object-cover rounded-lg" src="assets/img/folder.png" alt="">
+        <span class="block">Oct. ${day.toString().padStart(2, "0")}, 2025</span>
+    `;
 
             if (day > today) {
                 // 🔒 Future days locked
@@ -517,13 +520,21 @@
             } else {
                 // ✅ Past & today are clickable
                 folder.addEventListener("click", () => {
+                    // 🧠 Save scroll position before switching view
+                    previousScroll = container.scrollTop;
+
+                    // Switch to letter view
                     foldersGrid.classList.add("hidden");
                     content.classList.remove("hidden");
                     goBackBtn.classList.remove("hidden");
 
+                    // Instantly jump to top of letter view
+                    container.scrollTop = 0;
+
                     folderTitle.textContent = `October ${day}, 2025`;
                     folderText.innerHTML = letters[day] || "No letter yet ✨";
 
+                    // Special button for day 24
                     if (day === 24) {
                         if (!document.getElementById("clickMeBtn")) {
                             const btnWrapper = document.createElement("div");
@@ -552,6 +563,9 @@
             content.classList.add("hidden");
             goBackBtn.classList.add("hidden");
             foldersGrid.classList.remove("hidden");
+
+            // 🧠 Restore previous scroll position instantly
+            container.scrollTop = previousScroll;
         }
     </script>
 
