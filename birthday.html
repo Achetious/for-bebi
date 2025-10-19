@@ -47,6 +47,7 @@
             background-size: 1000% 100%;
             animation: smooth-rainbow 15s linear infinite, pop 2s ease-in-out infinite alternate;
             margin-top: 50px;
+            margin-bottom: 20px;
             filter: drop-shadow(10px 10px 50px rgba(66, 0, 66, 0.6)) drop-shadow(10px 10px 90px rgba(0, 71, 71, 0.5));
         }
 
@@ -205,15 +206,23 @@
 </head>
 
 <body class="flex justify-center items-center flex-col overflow-hidden">
-    <audio id="birthdayAudio" autoplay loop>
+    <audio id="birthdayAudio" autoplay>
         <source src="assets/songs/happy-birthday.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
     <div class="birthday-text" data-aos="fade-in" data-aos-duration="3000">
         Happy Birthday!!!!!!
+        <span class="lg:hidden max-lg:block text-lg">Touch anywhere to play the music!<br>and to see a cute
+            surprise</span>
     </div>
     <div class="birthday-text1">🎂💖</div>
+
+    <div id="nextPageButton"
+        class="hidden mt-6 px-6 py-3 bg-[#F2BDDE] text-white text-lg font-semibold rounded-xl shadow-md hover:bg-[#ff6ac6] transition cursor-pointer animate-bounce-slow z-50"
+        onclick="window.location.href='for-bebi.html'">
+        🎁 Click here for a surprise 💖
+    </div>
 
     <div id="balloons"></div>
 
@@ -239,60 +248,158 @@
             "giphy (1).gif",
             "good-morning.gif",
             "mus8029-cat-dance.gif",
-            "1231.gif"
+            "123.gif",
+            "1231.gif",
+            "12312.gif",
         ];
 
         let gifsShown = false;
+        const gifs = [];
+        let animationRunning = false;
+        let gifsRemoved = false;
 
         function showAllGifs() {
-            const usedPositions = [];
-            const margin = 200; // keeps gifs away from edges
-
             gifFiles.forEach(file => {
                 const gif = document.createElement("img");
                 gif.src = gifFolder + file;
                 gif.className = "gif-image";
+                gif.style.position = "absolute";
+                gif.style.width = "150px";
+                gif.style.height = "auto";
+                gif.style.opacity = "0";
+                gif.style.transition = "opacity 1s";
 
-                let x, y;
-                let overlapping;
+                const x = Math.random() * (window.innerWidth - 150);
+                const y = Math.random() * (window.innerHeight - 150);
 
-                // Try random positions until one doesn’t overlap
-                do {
-                    x = Math.random() * (window.innerWidth - 200);
-                    y = Math.random() * (window.innerHeight - 200);
-                    overlapping = usedPositions.some(pos => {
-                        return (
-                            Math.abs(pos.x - x) < 160 &&
-                            Math.abs(pos.y - y) < 160
-                        );
-                    });
-                } while (overlapping);
-
-                usedPositions.push({ x, y });
+                const dx = (Math.random() * 2 + 1) * (Math.random() < 0.5 ? 1 : -1);
+                const dy = (Math.random() * 2 + 1) * (Math.random() < 0.5 ? 1 : -1);
 
                 gif.style.left = x + "px";
                 gif.style.top = y + "px";
-
                 document.body.appendChild(gif);
 
-                // Fade in smoothly
-                setTimeout(() => {
-                    gif.style.opacity = "1";
-                }, 100);
+                setTimeout(() => (gif.style.opacity = "1"), 100);
+
+                gifs.push({ el: gif, x, y, dx, dy });
             });
+
+            animationRunning = true;
+            animateGifs();
         }
 
-        // 🎵 Trigger when song reaches 23 seconds
+        function animateGifs() {
+            if (!animationRunning) return;
+
+            gifs.forEach(g => {
+                g.x += g.dx;
+                g.y += g.dy;
+
+                const rect = g.el.getBoundingClientRect();
+                const bouncePadding = 2; // Prevent edge jitter
+
+                // Horizontal bounce
+                if (g.x <= bouncePadding) {
+                    g.x = bouncePadding;
+                    g.dx *= -1;
+                } else if (g.x + rect.width >= window.innerWidth - bouncePadding) {
+                    g.x = window.innerWidth - rect.width - bouncePadding;
+                    g.dx *= -1;
+                }
+
+                // Vertical bounce
+                if (g.y <= bouncePadding) {
+                    g.y = bouncePadding;
+                    g.dy *= -1;
+                } else if (g.y + rect.height >= window.innerHeight - bouncePadding) {
+                    g.y = window.innerHeight - rect.height - bouncePadding;
+                    g.dy *= -1;
+                }
+
+                g.el.style.left = g.x + "px";
+                g.el.style.top = g.y + "px";
+            });
+
+            requestAnimationFrame(animateGifs);
+        }
+
+        function createConfetti(x, y) {
+            const colors = ["#ff4d4d", "#ffd633", "#66ccff", "#66ff66", "#ff99ff"];
+            for (let i = 0; i < 15; i++) {
+                const confetti = document.createElement("div");
+                confetti.className = "confetti";
+                confetti.style.position = "absolute";
+                confetti.style.width = "8px";
+                confetti.style.height = "8px";
+                confetti.style.borderRadius = "2px";
+                confetti.style.backgroundColor =
+                    colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = x + "px";
+                confetti.style.top = y + "px";
+                confetti.style.opacity = "1";
+                confetti.style.pointerEvents = "none";
+                document.body.appendChild(confetti);
+
+                const angle = Math.random() * 2 * Math.PI;
+                const speed = Math.random() * 6 + 3;
+                const vx = Math.cos(angle) * speed;
+                const vy = Math.sin(angle) * speed - 2;
+
+                let opacity = 1;
+                function animate() {
+                    confetti.style.left =
+                        parseFloat(confetti.style.left) + vx + "px";
+                    confetti.style.top =
+                        parseFloat(confetti.style.top) + vy + "px";
+                    vy += 0.3; // gravity
+                    opacity -= 0.03;
+                    confetti.style.opacity = opacity;
+
+                    if (opacity > 0) requestAnimationFrame(animate);
+                    else confetti.remove();
+                }
+                requestAnimationFrame(animate);
+            }
+        }
+
+        function removeAllGifs() {
+            if (gifsRemoved) return;
+            gifsRemoved = true;
+            animationRunning = false;
+
+            gifs.forEach(g => {
+                const rect = g.el.getBoundingClientRect();
+
+                // Pop effect
+                g.el.style.transition = "transform 0.6s ease, opacity 0.6s ease";
+                g.el.style.transform = "scale(0) rotate(720deg)";
+                g.el.style.opacity = "0";
+
+                // Confetti burst
+                createConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+                setTimeout(() => g.el.remove(), 800);
+            });
+
+            gifs.length = 0;
+        }
+
         const audio = document.getElementById("birthdayAudio");
         audio.addEventListener("timeupdate", () => {
             if (audio.currentTime >= 23 && !gifsShown) {
                 gifsShown = true;
                 showAllGifs();
             }
-        });
-    </script>
-    <script>
 
+            // 🎉 Pop + confetti at 1:43 (103s)
+            if (audio.currentTime >= 103 && !gifsRemoved) {
+                removeAllGifs();
+            }
+        });
+
+    </script>
+
+    <script>
         /* --------- Physics confetti emitter (bottom-left & bottom-right) --------- */
         (() => {
             const canvas = document.getElementById('confettiCanvas');
@@ -318,7 +425,7 @@
 
             // Physics parameters (tweak for different behavior)
             const GRAVITY = 0.1;         // pulls pieces down
-            const FALL_GRAVITY = 0.05;    // gravity after peak (to make falling slower)
+            const FALL_GRAVITY = 0.10;    // gravity after peak (to make falling slower)
             const AIR_DRAG = 0.995;       // horizontal drag
             const ROT_DRAG = 0.99;
             const WIND_VARIATION = 0.02;  // small horizontal wind noise
@@ -480,7 +587,7 @@
                 emitBurst(emitterRight.x, emitterRight.y, emitterRight.dir, Math.floor(rand(20, 40)));
             }, 1000);
 
-            // 🕐 Stop shooting completely after 10 seconds
+            // 🕐 Stop shooting completely after 5 seconds
             setTimeout(() => {
                 clearInterval(burstInterval);
             }, 5000);
@@ -588,7 +695,7 @@
             }, 15000);
         }
 
-        setInterval(createBalloon, 1200);
+        setInterval(createBalloon, 2500);
 
         // ✨ Stars
         const starContainer = document.getElementById("stars");
@@ -605,27 +712,29 @@
                 star.remove();
             }, 4000);
         }
-        setInterval(createStar, 800);
+        setInterval(createStar, 1500);
 
         // Play birthday song (needed for browsers that block autoplay with sound)
         document.addEventListener("DOMContentLoaded", () => {
             const audio = document.getElementById("birthdayAudio");
+            const nextPageButton = document.getElementById("nextPageButton");
 
-            // Try to play automatically (may fail silently)
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(() => {
-                    // Wait for user interaction if blocked
-                    document.body.addEventListener("click", () => {
-                        audio.play();
-                    }, { once: true });
+            audio.addEventListener("ended", () => {
+                nextPageButton.classList.remove("hidden");
+                nextPageButton.style.opacity = "0";
+                nextPageButton.style.transition = "opacity 1.5s ease";
+                setTimeout(() => { nextPageButton.style.opacity = "1"; }, 100);
+            });
 
-                    // Also allow touchstart for mobile
-                    document.body.addEventListener("touchstart", () => {
-                        audio.play();
-                    }, { once: true });
-                });
-            }
+            // Fallback in case audio "ended" doesn’t fire precisely
+            audio.addEventListener("timeupdate", () => {
+                if (audio.currentTime >= 105 && nextPageButton.classList.contains("hidden")) {
+                    nextPageButton.classList.remove("hidden");
+                    nextPageButton.style.opacity = "0";
+                    nextPageButton.style.transition = "opacity 1.5s ease";
+                    setTimeout(() => { nextPageButton.style.opacity = "1"; }, 100);
+                }
+            });
         });
     </script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
