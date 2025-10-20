@@ -206,7 +206,7 @@
 </head>
 
 <body class="flex justify-center items-center flex-col overflow-hidden">
-    <audio id="birthdayAudio" autoplay>
+    <audio id="birthdayAudio" preload="auto">
         <source src="assets/songs/happy-birthday.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -233,12 +233,15 @@
         style="position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
 
     </script>
+
+    <!-- touchmove disabled -->
     <script>
         document.body.addEventListener('touchmove', function (e) {
             e.preventDefault();
         }, { passive: false });
     </script>
 
+    <!-- gif player -->
     <script>
         const gifFolder = "assets/video/";
         const gifFiles = [
@@ -399,8 +402,8 @@
 
     </script>
 
+    <!-- Physics confetti emitter (bottom-left & bottom-right) -->
     <script>
-        /* --------- Physics confetti emitter (bottom-left & bottom-right) --------- */
         (() => {
             const canvas = document.getElementById('confettiCanvas');
             const ctx = canvas.getContext('2d');
@@ -635,8 +638,8 @@
         })();
     </script>
 
+    <!-- 🎈 Auto-generate balloons -->
     <script>
-        // 🎈 Auto-generate balloons
         const balloonContainer = document.getElementById("balloons");
         const balloonImages = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png"];
 
@@ -719,28 +722,31 @@
             const audio = document.getElementById("birthdayAudio");
             const nextPageButton = document.getElementById("nextPageButton");
 
-            // Try autoplay (may fail silently)
-            audio.play().catch(() => {
-                console.log("Autoplay blocked — waiting for user interaction...");
+            // Try to autoplay (works on most desktop browsers)
+            audio.play().then(() => {
+                console.log("✅ Audio autoplayed successfully");
+            }).catch(() => {
+                console.log("⚠️ Autoplay blocked — waiting for user interaction...");
             });
 
-            // When user taps or clicks anywhere, start music
-            const playMusic = () => {
+            // Function to start audio when user interacts
+            function enableAudio() {
                 if (audio.paused) {
                     audio.play().then(() => {
-                        console.log("Audio started by user interaction");
-                    }).catch(err => console.log(err));
+                        console.log("🎵 Audio started by user interaction");
+                    }).catch(err => console.warn("⚠️ Could not play:", err));
                 }
 
-                // Remove listeners after first play
-                document.removeEventListener("click", playMusic);
-                document.removeEventListener("touchstart", playMusic);
-            };
+                // Remove listeners after first tap
+                document.removeEventListener("click", enableAudio);
+                document.removeEventListener("touchstart", enableAudio);
+            }
 
-            document.addEventListener("click", playMusic);
-            document.addEventListener("touchstart", playMusic);
+            // Attach tap/click listeners for mobile
+            document.addEventListener("click", enableAudio);
+            document.addEventListener("touchstart", enableAudio);
 
-            // When the song ends, reveal the "Next Page" button
+            // 🎁 Show "Next Page" button when the song ends
             audio.addEventListener("ended", () => {
                 nextPageButton.classList.remove("hidden");
                 nextPageButton.style.opacity = "0";
@@ -750,9 +756,13 @@
                 }, 100);
             });
 
-            // Safety: if 'ended' event doesn't fire exactly, show button near the end
+            // Safety: if "ended" event misses (rare case), show near the end
             audio.addEventListener("timeupdate", () => {
-                if (audio.currentTime >= audio.duration - 1 && nextPageButton.classList.contains("hidden")) {
+                if (
+                    audio.duration &&
+                    audio.currentTime >= audio.duration - 1 &&
+                    nextPageButton.classList.contains("hidden")
+                ) {
                     nextPageButton.classList.remove("hidden");
                     nextPageButton.style.opacity = "0";
                     nextPageButton.style.transition = "opacity 1.5s ease";
@@ -763,7 +773,6 @@
             });
         });
     </script>
-
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
