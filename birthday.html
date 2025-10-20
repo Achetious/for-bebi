@@ -15,18 +15,16 @@
         rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        a[href="https://confettipage.com"] {
-            display: none !important;
-        }
-
         html,
         body {
             overflow: hidden;
             height: 100%;
-            touch-action: none;
             overscroll-behavior: none;
             background: none;
+            touch-action: manipulation;
+            /* ✅ still disables zoom, but keeps taps working */
         }
+
 
         .birthday-text {
             z-index: 100;
@@ -209,7 +207,7 @@
 <body class="">
     <div
         class="bg-[url('../img/bg.png')] bg-center bg-fixed bg-cover h-screen m-0 w-full flex justify-center items-center flex-col overflow-hidden">
-        <audio id="birthdayAudio" preload="auto">
+        <audio id="birthdayAudio" preload="auto" playsinline>
             <source src="assets/songs/happy-birthday.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
@@ -235,7 +233,6 @@
 
     </script>
 
-    <!-- touchmove disabled -->
     <script>
         document.body.addEventListener('touchmove', function (e) {
             e.preventDefault();
