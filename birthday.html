@@ -232,13 +232,6 @@
     <div id="balloons"></div>
 
     </script>
-
-    <script>
-        document.body.addEventListener('touchmove', function (e) {
-            e.preventDefault();
-        }, { passive: false });
-    </script>
-
     <!-- gif player -->
     <script>
         const gifFolder = "assets/video/";
@@ -747,9 +740,27 @@
             document.addEventListener("click", enableAudio, { once: true });
             document.addEventListener("touchstart", enableAudio, { once: true });
 
-            // --- FIXED: don’t block initial touch ---
-            document.body.addEventListener("touchmove", function (e) {
-                if (e.target.tagName !== "AUDIO") e.preventDefault();
+            // Don't block touchmove until after audio has started
+            let audioUnlocked = false;
+
+            function enableAudio() {
+                try {
+                    audio.load(); // ensure iOS Safari can start cleanly
+                    audio.play().then(() => {
+                        console.log("🎵 Audio started by user interaction");
+                        audioUnlocked = true; // allow touchmove prevention after unlock
+                    }).catch(err => console.warn("⚠️ Could not play:", err));
+                } catch (err) {
+                    console.warn("⚠️ Audio play failed:", err);
+                }
+
+                document.removeEventListener("click", enableAudio);
+                document.removeEventListener("touchstart", enableAudio);
+            }
+
+            // allow scroll prevention *only* after first play succeeds
+            document.body.addEventListener("touchmove", (e) => {
+                if (audioUnlocked && e.target.tagName !== "AUDIO") e.preventDefault();
             }, { passive: false });
 
             // Show next page button when song ends
