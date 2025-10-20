@@ -17,7 +17,7 @@
     <style>
         html,
         body {
-            overflow: hidden;
+            overflow: hidden !important;
             height: 100%;
             overscroll-behavior: none;
             background: none;
@@ -207,7 +207,7 @@
 <body class="">
     <div
         class="bg-[url('../img/bg.png')] bg-center bg-fixed bg-cover h-screen m-0 w-full flex justify-center items-center flex-col overflow-hidden">
-        <audio id="birthdayAudio" preload="auto" playsinline>
+        <audio id="birthdaySong" preload="auto" playsinline>
             <source src="assets/songs/happy-birthday.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
@@ -218,7 +218,7 @@
         </div>
         <div class="birthday-text1">🎂💖</div>
         <div id="nextPageButton"
-            class="hidden mt-6 px-6 py-3 bg-[#F2BDDE] text-white text-lg font-semibold rounded-xl shadow-md hover:bg-[#ff6ac6] transition cursor-pointer animate-bounce-slow z-50"
+            class="hidden mt-6 px-6 py-3 bg-[#F2BDDE] text-white text-lg font-semibold rounded-xl shadow-md hover:bg-[#ff6ac6] opacity-0 transition cursor-pointer animate-bounce-slow z-50"
             onclick="window.location.href='for-bebi.html'">
             🎁 Click here for a surprise 💖
         </div>
@@ -710,68 +710,62 @@
 
         // Play birthday song (needed for browsers that block autoplay with sound)
         document.addEventListener("DOMContentLoaded", () => {
-            const audio = document.getElementById("birthdayAudio");
+            const audio = document.getElementById("birthdaySong"); // your <audio> tag
             const nextPageButton = document.getElementById("nextPageButton");
-
-            // Try desktop autoplay
-            audio.play().then(() => {
-                console.log("✅ Audio autoplayed successfully");
-            }).catch(() => {
-                console.log("⚠️ Autoplay blocked — waiting for user interaction...");
-            });
-
-            // --- FIXED: handle user gesture early and safely ---
-            function enableAudio() {
-                try {
-                    audio.load(); // ensure iOS Safari can start cleanly
-                    audio.play().then(() => {
-                        console.log("🎵 Audio started by user interaction");
-                    }).catch(err => console.warn("⚠️ Could not play:", err));
-                } catch (err) {
-                    console.warn("⚠️ Audio play failed:", err);
-                }
-
-                // Remove listeners after first success
-                document.removeEventListener("click", enableAudio);
-                document.removeEventListener("touchstart", enableAudio);
-            }
-
-            // --- FIXED: attach immediately, not delayed ---
-            document.addEventListener("click", enableAudio, { once: true });
-            document.addEventListener("touchstart", enableAudio, { once: true });
-
-            // Don't block touchmove until after audio has started
             let audioUnlocked = false;
 
-            function enableAudio() {
+            // --- Function to start the audio safely ---
+            function startAudio() {
+                if (audioUnlocked || !audio.paused) return; // prevent restart or multiple plays
                 try {
-                    audio.load(); // ensure iOS Safari can start cleanly
-                    audio.play().then(() => {
-                        console.log("🎵 Audio started by user interaction");
-                        audioUnlocked = true; // allow touchmove prevention after unlock
-                    }).catch(err => console.warn("⚠️ Could not play:", err));
+                    audio.load(); // ensures iOS Safari initializes properly
+                    const playPromise = audio.play();
+
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            console.log("🎵 Audio started");
+                            audioUnlocked = true;
+                            document.removeEventListener("click", startAudio);
+                            document.removeEventListener("touchstart", startAudio);
+                        }).catch(err => {
+                            console.warn("⚠️ Could not play automatically:", err);
+                        });
+                    }
                 } catch (err) {
                     console.warn("⚠️ Audio play failed:", err);
                 }
-
-                document.removeEventListener("click", enableAudio);
-                document.removeEventListener("touchstart", enableAudio);
             }
 
-            // allow scroll prevention *only* after first play succeeds
+            // --- Detect if device is desktop ---
+            const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+
+            if (isDesktop) {
+                // 🖥️ Try autoplay on desktop
+                audio.volume = 1.0;
+                startAudio();
+            } else {
+                // 📱 Require tap on mobile/tablet
+                document.addEventListener("click", startAudio);
+                document.addEventListener("touchstart", startAudio);
+            }
+
+            // --- Optional: prevent scrolling *only after* audio plays ---
             document.body.addEventListener("touchmove", (e) => {
-                if (audioUnlocked && e.target.tagName !== "AUDIO") e.preventDefault();
+                if (audioUnlocked && e.target.tagName !== "AUDIO") {
+                    e.preventDefault();
+                }
             }, { passive: false });
 
-            // Show next page button when song ends
+            // --- Show next page button when song ends ---
             audio.addEventListener("ended", () => {
+                console.log("🎶 Song ended — showing next button");
                 nextPageButton.classList.remove("hidden");
                 nextPageButton.style.opacity = "0";
                 nextPageButton.style.transition = "opacity 1.5s ease";
                 setTimeout(() => nextPageButton.style.opacity = "1", 100);
             });
 
-            // Fallback in case "ended" doesn't fire
+            // --- Fallback if 'ended' doesn’t trigger ---
             audio.addEventListener("timeupdate", () => {
                 if (audio.duration && audio.currentTime >= audio.duration - 1 &&
                     nextPageButton.classList.contains("hidden")) {
